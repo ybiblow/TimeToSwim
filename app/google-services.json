@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "731425061295",
+    "firebase_url": "https://timetoswim-c578e-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "timetoswim-c578e",
+    "storage_bucket": "timetoswim-c578e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731425061295:android:cb0c09f06383fb3b98175a",
+        "android_client_info": {
+          "package_name": "dev.jacob_ba.timetoswim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731425061295-tt5a39a4um2e87aruhgp93q4dbht348l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCV9w2j-eFuKfaRSI7wCBvfcZO8yrLoeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731425061295-tt5a39a4um2e87aruhgp93q4dbht348l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
