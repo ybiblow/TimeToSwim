@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddShiftActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="60dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shift"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="40sp"></com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_pick_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick Date"></com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date Display Here"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:textSize="20sp"></com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_add_shift"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:elevation="8dp"
+            android:visibility="visible"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:id="@+id/ll_add_shift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="Start Time"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="5">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tiet_start_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="10" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="End Time"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="5">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tiet_end_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="10" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_shift"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Shift"></com.google.android.material.button.MaterialButton>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_addShift"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+
+</RelativeLayout>

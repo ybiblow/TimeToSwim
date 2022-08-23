@@ -4,44 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activities.AddLessonActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="100dp"
+        android:layout_height="match_parent"
+        android:layout_margin="60dp"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shift"
-            android:textAlignment="center"
+            android:gravity="center"
+            android:text="Schedule a lesson"
             android:textColor="@color/black"
-            android:textSize="40sp"></com.google.android.material.textview.MaterialTextView>
+            android:textSize="20dp"></TextView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_pick_date"
+            android:id="@+id/btn_pick_date_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pick Date"></com.google.android.material.button.MaterialButton>
+            android:text="Pick date"></com.google.android.material.button.MaterialButton>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tv_show_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date Display Here"
-            android:padding="5dp"
             android:textAlignment="center"
             android:textSize="20sp"></com.google.android.material.textview.MaterialTextView>
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_show_shifts"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Shift"
-            android:visibility="invisible"
-            android:id="@+id/btn_add_shift"></com.google.android.material.button.MaterialButton>
+            android:layout_height="match_parent"
+            android:layout_weight="1"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
-
-
 </RelativeLayout>
