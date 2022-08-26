@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
                     onSignInResult(result);
                 }
+
             }
     );
 

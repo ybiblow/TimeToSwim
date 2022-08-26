@@ -15,5 +15,6 @@
     <color name="green_500_light">#80E27E</color>
     <color name="blue_500_primary">#2196F3</color>
     <color name="blue_500_light">#6EC6FF</color>
+    <color name="red_500_light">#FF7961</color>
 
 </resources>

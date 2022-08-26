@@ -26,8 +26,8 @@ public class PrivateLesson extends Lesson {
         super();
     }
 
-    public PrivateLesson(long date, String teacherUid, int status, String studentUid) {
-        super(date, teacherUid, status);
+    public PrivateLesson(long date, String teacherUid, String studentUid) {
+        super(date, teacherUid);
         this.studentUid = studentUid;
     }
 

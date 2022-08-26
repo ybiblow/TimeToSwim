@@ -4,23 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.TeacherShiftActivity">
+    tools:context=".Activities.HandlingRequestsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/view_requests"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View Requests"></Button>
+            android:gravity="center"
+            android:text="Lesson Requests"
+            android:textColor="@color/black"
+            android:textSize="20sp"></TextView>
 
-        <Button
-            android:id="@+id/view_lessons"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_requests"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View Lessons"></Button>
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 </RelativeLayout>

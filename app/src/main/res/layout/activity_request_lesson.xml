@@ -103,6 +103,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_end_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -121,9 +122,36 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="18:00"
+                        android:text="10:45"
                         android:textColor="@color/black"></TextView>
                 </LinearLayout>
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+
+                    android:id="@+id/btn_toggle_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:checkedButton="@id/lesson_request_private_button"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/lesson_request_private_button"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Private"></Button>
+
+                    <Button
+                        android:id="@+id/lesson_request_group_button"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Group"></Button>
+                </com.google.android.material.button.MaterialButtonToggleGroup>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_request_lesson"

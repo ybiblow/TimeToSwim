@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -22,6 +23,7 @@ import dev.jacob_ba.timetoswim.model.Controller;
 import dev.jacob_ba.timetoswim.model.GroupLesson;
 import dev.jacob_ba.timetoswim.model.Lesson;
 import dev.jacob_ba.timetoswim.model.PrivateLesson;
+import dev.jacob_ba.timetoswim.model.RequestLesson;
 import dev.jacob_ba.timetoswim.model.Shift;
 import dev.jacob_ba.timetoswim.model.Student;
 
@@ -29,7 +31,7 @@ public class RequestLessonActivity extends AppCompatActivity {
     private TextView lessonDate;
     private TextView lessonStartTime;
     private TextView lessonEndTime;
-    private int prefLesson;
+    private MaterialButtonToggleGroup toggleGroup;
     private MaterialButton btnSetStartTime;
     private MaterialButton btnRequestLesson;
     private Student student;
@@ -42,7 +44,6 @@ public class RequestLessonActivity extends AppCompatActivity {
         setOnClicks();
         lessonDate.setText(Controller.getInstance().getCurrentShift().getStartDate());
         student = Controller.getInstance().getCurrentStudent();
-        prefLesson = student.getPrefLessonType();
     }
 
     private void setOnClicks() {
@@ -62,6 +63,10 @@ public class RequestLessonActivity extends AppCompatActivity {
                         String hour = String.format("%02d", picker.getHour());
                         String minute = String.format("%02d", 5 * Math.round(picker.getMinute() / 5));
                         lessonStartTime.setText(hour + ":" + minute);
+                        if (toggleGroup.getCheckedButtonId() == R.id.lesson_request_private_button)
+                            setEndTime(45);
+                        else
+                            setEndTime(60);
                     }
                 });
                 picker.show(getSupportFragmentManager(), "TAG");
@@ -72,21 +77,50 @@ public class RequestLessonActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Making a lesson request
                 Log.i("Info", "btnRequestLesson clicked!");
-                Lesson lesson = null;
+                RequestLesson rl = null;
                 Shift shift = Controller.getInstance().getCurrentShift();
                 String strDate = lessonDate.getText().toString();
                 String startTime = lessonStartTime.getText().toString();
                 String teacherUid = shift.getTeacherUid();
                 long dateStartInMillis = getDateInMilliseconds(strDate, startTime);
-                if (prefLesson == 0)
-                    lesson = new PrivateLesson(dateStartInMillis, teacherUid, 0, student.getUid());
-                if (prefLesson == 1)
-                    lesson = new GroupLesson();
-                updateLessons(lesson);
+                String lessonType = getLessonType();
+                rl = new RequestLesson(dateStartInMillis, teacherUid, student.getUid(), lessonType, 0);
+                updateRequestLessons(rl);
                 Toast.makeText(RequestLessonActivity.this, "Your request has been submitted!", Toast.LENGTH_SHORT).show();
                 loadNewActivity();
             }
         });
+        toggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (!isChecked)
+                    return;
+                Log.i("Info", "checkedId=" + checkedId);
+                if (checkedId == R.id.lesson_request_private_button) {
+                    setEndTime(45);
+                }
+                if (checkedId == R.id.lesson_request_group_button) {
+                    setEndTime(60);
+                }
+            }
+        });
+    }
+
+    private String getLessonType() {
+        int id = toggleGroup.getCheckedButtonId();
+        if (id == R.id.lesson_request_private_button)
+            return PrivateLesson.class.getSimpleName();
+        if (id == R.id.lesson_request_group_button)
+            return GroupLesson.class.getSimpleName();
+        return null;
+    }
+
+    private void setEndTime(int c) {
+        String time = lessonStartTime.getText().toString();
+        String timeArr[] = time.split(":");
+        int minute = (Integer.parseInt(timeArr[1]) + c) % 60;
+        int hour = Integer.parseInt(timeArr[0]) + (Integer.parseInt(timeArr[1]) + c) / 60;
+        lessonEndTime.setText(String.format("%02d", hour) + ":" + String.format("%02d", minute));
     }
 
     private void loadNewActivity() {
@@ -95,13 +129,9 @@ public class RequestLessonActivity extends AppCompatActivity {
         this.finish();
     }
 
-    private void updateLessons(Lesson lesson) {
-        // Add private lesson to database
-        if (lesson instanceof PrivateLesson)
-            Controller.getInstance().addPrivateLessonToDatabase((PrivateLesson) lesson);
-        // Add group lesson to database
-        if (lesson instanceof GroupLesson)
-            Controller.getInstance().addGroupLessonToDatabase((GroupLesson) lesson);
+    private void updateRequestLessons(RequestLesson rl) {
+        // Add request lesson to database
+        Controller.getInstance().addRequestLessonToDatabase(rl);
     }
 
     long getDateInMilliseconds(String date, String time) {
@@ -116,5 +146,6 @@ public class RequestLessonActivity extends AppCompatActivity {
         lessonEndTime = findViewById(R.id.tv_lesson_end_time);
         btnSetStartTime = findViewById(R.id.btn_set_start_time);
         btnRequestLesson = findViewById(R.id.btn_request_lesson);
+        toggleGroup = findViewById(R.id.btn_toggle_group);
     }
 }

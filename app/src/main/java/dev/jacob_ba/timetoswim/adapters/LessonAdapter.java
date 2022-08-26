@@ -65,10 +65,10 @@ public class LessonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public LessonViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvDate = itemView.findViewById(R.id.tv_lesson_date1);
-            tvLessonType = itemView.findViewById(R.id.tv_lesson_type);
-            tvStartTime = itemView.findViewById(R.id.tv_lesson_start_time1);
-            tvEndTime = itemView.findViewById(R.id.tv_end_time1);
+//            tvDate = itemView.findViewById(R.id.tv_lesson_date1);
+//            tvLessonType = itemView.findViewById(R.id.tv_lesson_type);
+//            tvStartTime = itemView.findViewById(R.id.tv_lesson_start_time1);
+//            tvEndTime = itemView.findViewById(R.id.tv_end_time1);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

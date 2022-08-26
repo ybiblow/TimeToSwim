@@ -9,21 +9,18 @@ import java.util.GregorianCalendar;
 public abstract class Lesson implements Parcelable {
     private long date;
     private String teacherUid;
-    private int status; // 0-pending, 1-approved, 2-declined
 
     public Lesson() {
     }
 
-    public Lesson(long date, String teacherUid, int status) {
+    public Lesson(long date, String teacherUid) {
         this.date = date;
         this.teacherUid = teacherUid;
-        this.status = status;
     }
 
     protected Lesson(Parcel in) {
         this.date = in.readLong();
         this.teacherUid = in.readString();
-        this.status = in.readInt();
     }
 
     public long getDate() {
@@ -35,15 +32,7 @@ public abstract class Lesson implements Parcelable {
         return teacherUid;
     }
 
-    /**
-     * return status
-     * <p>0 - pending request</p>
-     * <p>1 - approved request</p>
-     * <p>2 - declined request</p>
-     */
-    public int getStatus() {
-        return status;
-    }
+
 
     public String getStringDate() {
         Calendar calendar = GregorianCalendar.getInstance();

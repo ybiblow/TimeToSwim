@@ -60,7 +60,7 @@ public class AddShiftActivity extends AppCompatActivity {
             public void loadActivity() {
                 Intent intent = new Intent(currentActivity, TeacherShiftActivity.class);
                 currentActivity.startActivity(intent);
-                currentActivity.finish();
+                //currentActivity.finish();
             }
         };
         ShiftAdapter shiftAdapter = new ShiftAdapter(shifts, callbackShift);

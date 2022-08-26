@@ -24,8 +24,8 @@ public class GroupLesson extends Lesson {
         super();
     }
 
-    public GroupLesson(long date, String teacherUid, int status, ArrayList<String> studentsUids) {
-        super(date, teacherUid, status);
+    public GroupLesson(long date, String teacherUid, ArrayList<String> studentsUids) {
+        super(date, teacherUid);
         this.studentsUids = studentsUids;
     }
 

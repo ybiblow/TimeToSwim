@@ -26,11 +26,13 @@ public class Controller {
     private DatabaseReference referenceTeachers;
     private DatabaseReference referenceStudents;
     private DatabaseReference referenceShifts;
+    private DatabaseReference referenceRequestLessons;
     private DatabaseReference referencePrivateLessons;
     private DatabaseReference referenceGroupLessons;
     private ArrayList<Shift> shifts;
     private ArrayList<Teacher> teachers;
     private ArrayList<Student> students;
+    private ArrayList<RequestLesson> requestLessons;
     private ArrayList<PrivateLesson> privateLessons;
     private ArrayList<GroupLesson> groupLessons;
     private Teacher currentTeacher;
@@ -45,6 +47,7 @@ public class Controller {
             myController.referenceTeachers = myController.database.getReference("Teachers");
             myController.referenceStudents = myController.database.getReference("Students");
             myController.referenceShifts = myController.database.getReference("Shifts");
+            myController.referenceRequestLessons = myController.database.getReference("RequestLessons");
             myController.referencePrivateLessons = myController.database.getReference("PrivateLessons");
             myController.referenceGroupLessons = myController.database.getReference("GroupLessons");
         }
@@ -155,7 +158,7 @@ public class Controller {
                 for (DataSnapshot shiftValue : snapshot.getChildren()) {
                     shifts.add(shiftValue.getValue(Shift.class));
                 }
-                myController.loadPrivateLessons();
+                myController.loadRequestLessons();
             }
 
             @Override
@@ -163,6 +166,27 @@ public class Controller {
                 Log.i("Error", "Failed to read shifts from database! - " + error.toException());
             }
         });
+    }
+
+    private void loadRequestLessons() {
+        requestLessons = new ArrayList<>();
+        referenceRequestLessons.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("Info", "=====Loading RequestLesson=====");
+                for (DataSnapshot requestLessonValue : snapshot.getChildren()) {
+                    Log.i("Info", "" + requestLessonValue);
+                    requestLessons.add(requestLessonValue.getValue(RequestLesson.class));
+                }
+                myController.loadPrivateLessons();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void loadPrivateLessons() {
@@ -269,6 +293,11 @@ public class Controller {
         referenceGroupLessons.setValue(groupLessons);
     }
 
+    public void addRequestLessonToDatabase(RequestLesson rl) {
+        requestLessons.add(rl);
+        referenceRequestLessons.setValue(requestLessons);
+    }
+
     public ArrayList<Lesson> getTeacherLessons(String teacherUid) {
         ArrayList<Lesson> lessons = new ArrayList<>();
         for (Lesson lesson : groupLessons) {
@@ -280,5 +309,14 @@ public class Controller {
                 lessons.add(lesson);
         }
         return lessons;
+    }
+
+    public ArrayList<RequestLesson> getLessonRequestsOfDate(String shiftDate) {
+        ArrayList<RequestLesson> requests = new ArrayList<>();
+        for (RequestLesson rl : requestLessons) {
+            if (rl.getStringDate().equals(shiftDate))
+                requests.add(rl);
+        }
+        return requests;
     }
 }
