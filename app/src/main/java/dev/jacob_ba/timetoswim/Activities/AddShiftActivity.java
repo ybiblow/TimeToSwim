@@ -39,7 +39,6 @@ public class AddShiftActivity extends AppCompatActivity {
     private MaterialTextView tvDate;
     private MaterialButton btnPickDate;
     private MaterialButton btnAddShift;
-    private MaterialCardView cardAddShift;
     private TextInputEditText tietStartTime;
     private TextInputEditText tietEndTime;
     private RecyclerView addShiftRV;
@@ -71,7 +70,6 @@ public class AddShiftActivity extends AppCompatActivity {
 
     private void bindViews() {
         tvDate = findViewById(R.id.tv_date);
-        cardAddShift = findViewById(R.id.card_add_shift);
         btnPickDate = findViewById(R.id.btn_pick_date);
         btnAddShift = findViewById(R.id.btn_add_shift);
         tietStartTime = findViewById(R.id.tiet_start_time);

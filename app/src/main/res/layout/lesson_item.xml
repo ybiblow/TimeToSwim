@@ -26,7 +26,7 @@
                 android:text="Date"></TextView>
 
             <TextView
-                android:id="@+id/tv_request_date"
+                android:id="@+id/tv_lesson_date1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,7 +47,7 @@
                 android:text="Lesson type"></TextView>
 
             <TextView
-                android:id="@+id/tv_request_type"
+                android:id="@+id/tv_lesson_type1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -65,10 +65,31 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="Student"></TextView>
+
+            <TextView
+                android:id="@+id/tv_lesson_student_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Super Man"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="Start time"></TextView>
 
             <TextView
-                android:id="@+id/tv_request_start_time"
+                android:id="@+id/tv_lesson_start_time1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -89,7 +110,7 @@
                 android:text="End time"></TextView>
 
             <TextView
-                android:id="@+id/tv_request_end_time"
+                android:id="@+id/tv_lesson_end_time1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -97,27 +118,12 @@
                 android:text="10:45"></TextView>
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
+        <Button
+            android:id="@+id/tv_lesson_join_group_lesson"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:checkedButton="@id/Accept_request"
-            app:selectionRequired="true"
-            app:singleSelection="true">
-
-            <Button
-                android:id="@+id/Accept_request"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="button1"></Button>
-
-            <Button
-                android:id="@+id/deny_request"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="button2"></Button>
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
+            android:layout_margin="8dp"
+            android:text="join"
+            android:visibility="gone"></Button>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

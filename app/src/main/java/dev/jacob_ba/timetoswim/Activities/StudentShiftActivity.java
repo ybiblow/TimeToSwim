@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 import dev.jacob_ba.timetoswim.R;
 import dev.jacob_ba.timetoswim.adapters.LessonAdapter;
-import dev.jacob_ba.timetoswim.adapters.ShiftAdapter;
 import dev.jacob_ba.timetoswim.model.Controller;
 import dev.jacob_ba.timetoswim.model.Lesson;
 import dev.jacob_ba.timetoswim.model.Shift;
@@ -45,6 +44,7 @@ public class StudentShiftActivity extends AppCompatActivity {
 
     private void displayRecyclerView() {
         ArrayList<Lesson> lessons = getLessonsInShift();
+//        StudentRequestLessonAdapter studentRequestLessonAdapter = new StudentRequestLessonAdapter(lessons);
         LessonAdapter lessonAdapter = new LessonAdapter(lessons);
         rvShiftLessons.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
         rvShiftLessons.setItemAnimator(new DefaultItemAnimator());
@@ -80,7 +80,7 @@ public class StudentShiftActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(activity, RequestLessonActivity.class);
                 activity.startActivity(intent);
-                activity.finish();
+//                activity.finish();
             }
         });
     }
@@ -99,7 +99,7 @@ public class StudentShiftActivity extends AppCompatActivity {
         tvShiftDate = findViewById(R.id.tv_date1);
         tvShiftStartTime = findViewById(R.id.tv_shift_start_time1);
         tvShiftEndTime = findViewById(R.id.tv_shift_end_time1);
-        rvShiftLessons = findViewById(R.id.rv_shift_lessons);
+        rvShiftLessons = findViewById(R.id.rv_student_shift_lessons);
         exFab = findViewById(R.id.ext_fab_request_lesson);
     }
 }

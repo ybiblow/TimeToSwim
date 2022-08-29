@@ -3,6 +3,8 @@ package dev.jacob_ba.timetoswim.model;
 import android.os.Parcel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class GroupLesson extends Lesson {
     private ArrayList<String> studentsUids;
@@ -34,9 +36,19 @@ public class GroupLesson extends Lesson {
         studentsUids = in.readArrayList(String.class.getClassLoader());
     }
 
+    public ArrayList<String> getStudentsUids() {
+        return studentsUids;
+    }
+
     @Override
     public String getEndTime() {
-        return null;
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTimeInMillis(this.getDate());
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE) + LENGTH;
+        hour += minute / 60;
+        minute = minute % 60;
+        return String.format("%02d", hour) + ":" + String.format("%02d", minute);
     }
 
 

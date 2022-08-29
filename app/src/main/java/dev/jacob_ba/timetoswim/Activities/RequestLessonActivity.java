@@ -17,6 +17,7 @@ import com.google.android.material.timepicker.TimeFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import dev.jacob_ba.timetoswim.R;
 import dev.jacob_ba.timetoswim.model.Controller;
@@ -75,16 +76,19 @@ public class RequestLessonActivity extends AppCompatActivity {
         btnRequestLesson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Making a lesson request
+                // Create lesson request
+                // Check availability
+                if (!isAvailable())
+                    return;
                 Log.i("Info", "btnRequestLesson clicked!");
+
                 RequestLesson rl = null;
                 Shift shift = Controller.getInstance().getCurrentShift();
                 String strDate = lessonDate.getText().toString();
                 String startTime = lessonStartTime.getText().toString();
                 String teacherUid = shift.getTeacherUid();
                 long dateStartInMillis = getDateInMilliseconds(strDate, startTime);
-                String lessonType = getLessonType();
-                rl = new RequestLesson(dateStartInMillis, teacherUid, student.getUid(), lessonType, 0);
+                rl = new RequestLesson(dateStartInMillis, teacherUid, student.getUid(), getLessonType(), 0);
                 updateRequestLessons(rl);
                 Toast.makeText(RequestLessonActivity.this, "Your request has been submitted!", Toast.LENGTH_SHORT).show();
                 loadNewActivity();
@@ -106,13 +110,92 @@ public class RequestLessonActivity extends AppCompatActivity {
         });
     }
 
-    private String getLessonType() {
+    private boolean isAvailable() {
+        // Check availability:
+        // is lesson within shift time range?
+        if (!isLessonInShiftTimeRange())
+            return false;
+        // is lesson colliding with other lessons?
+        if (isLessonCollidingWithOtherLessons())
+            return false;
+
+        return true;
+
+    }
+
+    private boolean isLessonCollidingWithOtherLessons() {
+        Shift currentShift = Controller.getInstance().getCurrentShift();
+        ArrayList<Lesson> shiftLessons = Controller.getInstance().getLessonsOfShift(currentShift.getTeacherUid(), currentShift.getStartDate());
+        Log.i("Info", "Printing shift lesson:");
+        /*for (Lesson l : shiftLessons) {
+            Log.i("Info", "" + l.getStringDate() + ", " + l.getStartTime() + ", " + l.getEndTime());
+        }*/
+
+        // input details
+        String strDate = lessonDate.getText().toString();
+        String startTime = lessonStartTime.getText().toString();
+        String endTime = lessonEndTime.getText().toString();
+        long dateStartInMillis = getDateInMilliseconds(strDate, startTime);
+        long dateEndInMillis = getDateInMilliseconds(strDate, endTime);
+        // Check is current lesson request is colliding with other shifts
+        for (Lesson lesson : shiftLessons) {
+            long addTime = (lesson instanceof PrivateLesson) ? 45 * 60 * 1000 : 60 * 60 * 1000;
+            long lessonStartDateMillis = lesson.getDate();
+            long lessonEndDateMillis = lessonStartDateMillis + addTime;
+            boolean isColliding = false;
+            if (dateStartInMillis <= lessonStartDateMillis && dateEndInMillis <= lessonEndDateMillis)
+                isColliding = true;
+
+            if (dateStartInMillis > lessonStartDateMillis && dateStartInMillis < lessonEndDateMillis && dateEndInMillis > lessonEndDateMillis) {
+                isColliding = true;
+            }
+
+            if (dateStartInMillis <= lessonStartDateMillis && dateEndInMillis >= lessonEndDateMillis)
+                isColliding = true;
+
+            if (isColliding) {
+                Log.i("Info", "Requested Lesson is colliding with other lesson!");
+                Toast.makeText(this, "Requested Lesson is colliding with other lesson", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isLessonInShiftTimeRange() {
+        // Current shift details
+        Shift currentShift = Controller.getInstance().getCurrentShift();
+        long currentShiftStartTime = currentShift.getDateStart();
+        long currentShiftEndTime = currentShift.getDateEnd();
+        // input details
+        String strDate = lessonDate.getText().toString();
+        String startTime = lessonStartTime.getText().toString();
+        String endTime = lessonEndTime.getText().toString();
+        long dateStartInMillis = getDateInMilliseconds(strDate, startTime);
+        long dateEndInMillis = getDateInMilliseconds(strDate, startTime);
+        // checking that start time is valid
+        if (currentShiftStartTime > dateStartInMillis) {
+            Log.i("Info", "Lesson cannot begin before the shift begins!");
+            Toast.makeText(this, "Lesson cannot begin before the shift begins!, Start time is invalid", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        // Checking that end time is valid
+        if (currentShiftEndTime <= dateEndInMillis) {
+            Log.i("Info", "Lesson cannot end after the shift ends!");
+            Toast.makeText(this, "Lesson cannot end after the shift ends!, End time is invalid", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        // return true if all the above requirements are met.
+        return true;
+    }
+
+    private int getLessonType() {
         int id = toggleGroup.getCheckedButtonId();
         if (id == R.id.lesson_request_private_button)
-            return PrivateLesson.class.getSimpleName();
+            return 0;
         if (id == R.id.lesson_request_group_button)
-            return GroupLesson.class.getSimpleName();
-        return null;
+            return 1;
+        return -1;
     }
 
     private void setEndTime(int c) {

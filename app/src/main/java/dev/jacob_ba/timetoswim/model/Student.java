@@ -3,7 +3,7 @@ package dev.jacob_ba.timetoswim.model;
 import android.os.Parcel;
 
 public class Student extends Person {
-    private int swimStyle; // 0-hatira, 1-haze, 2-parpar, 3-gav
+//    private int swimStyle; // 0-hatira, 1-haze, 2-parpar, 3-gav
     private int prefLessonType; // 0-personal, 1-group, 2-personal/group
     public static final Creator<Student> CREATOR = new Creator<Student>() {
         @Override
@@ -23,15 +23,15 @@ public class Student extends Person {
         super();
     }
 
-    public Student(String uid, String fullName, int swimStyle, int prefLessonType) {
+    public Student(String uid, String fullName, int prefLessonType) {
         super(uid, fullName);
-        this.swimStyle = swimStyle;
+//        this.swimStyle = swimStyle;
         this.prefLessonType = prefLessonType;
     }
 
-    public int getSwimStyle() {
-        return swimStyle;
-    }
+//    public int getSwimStyle() {
+//        return swimStyle;
+//    }
 
     /**
      * <h3>Get preferred lesson type:</h3>

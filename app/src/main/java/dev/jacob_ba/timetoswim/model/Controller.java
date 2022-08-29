@@ -69,13 +69,13 @@ public class Controller {
         return tmp;
     }
 
-    private void getCurrentTeacher() {
+    public Teacher getCurrentTeacher() {
         for (Teacher t : teachers) {
             if (t.getUid().equals(currentUser.getUid())) {
                 currentTeacher = t;
             }
         }
-
+        return currentTeacher;
     }
 
     private void loadTeachers() {
@@ -125,7 +125,7 @@ public class Controller {
                 }
                 if (currentTeacher == null) {
                     if (!isStudentExists()) {
-                        Student s = new Student(currentUser.getUid(), currentUser.getDisplayName(), 0, 0);
+                        Student s = new Student(currentUser.getUid(), currentUser.getDisplayName(), 0);
                         students.add(s);
                         addStudentToDatabase(s);
                     }
@@ -318,5 +318,36 @@ public class Controller {
                 requests.add(rl);
         }
         return requests;
+    }
+
+    public void removeRequestLessonFromDatabase(RequestLesson requestLesson) {
+        requestLessons.remove(requestLesson);
+        referenceRequestLessons.setValue(requestLessons);
+    }
+
+    public ArrayList<Lesson> getLessonsOfShift(String teacherUid, String startDate) {
+        ArrayList<Lesson> shiftLessons = new ArrayList<>();
+        for (PrivateLesson pl : privateLessons) {
+            if (pl.getStringDate().equals(startDate) && pl.getTeacherUid().equals(teacherUid))
+                shiftLessons.add(pl);
+        }
+        for (GroupLesson gl : groupLessons) {
+            if (gl.getStringDate().equals(startDate) && gl.getTeacherUid().equals(teacherUid))
+                shiftLessons.add(gl);
+        }
+        return shiftLessons;
+    }
+
+    public String getStudentDisplayName(String studentUid) {
+        for (Student student : students) {
+            if (student.getUid().equals(studentUid))
+                return student.getFullName();
+        }
+        return null;
+    }
+
+    public void updateLessonsInDatabase() {
+        referencePrivateLessons.setValue(privateLessons);
+        referenceGroupLessons.setValue(groupLessons);
     }
 }
